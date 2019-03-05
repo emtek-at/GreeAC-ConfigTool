@@ -19,7 +19,6 @@ namespace ConfigTool
             JObject reqPackObj = new JObject();
             JObject resObj = new JObject();
             JObject resPackObj = new JObject();
-            //m_DeviceHost = "klima-kueche.emtek.local";
             
             while (true)
             {
@@ -33,6 +32,11 @@ namespace ConfigTool
                 // scan Device
                 reqObj["t"] = "scan";
                 string response = sendCommand(reqObj.ToString());
+                if (response == "")
+                {
+                    Console.WriteLine("Device didn't response properly.");
+                    continue;
+                }
                 resObj = JObject.Parse(response);
                 resPackObj = JObject.Parse(Crypter.Decrypt((string) resObj["pack"], ""));
                 m_DeviceMac = (string) resPackObj["mac"];
@@ -149,8 +153,6 @@ namespace ConfigTool
                     catch { }
 
                     returnData = "";
-
-                    Console.WriteLine("sendCommand Error: " + e.Message);
                 }
             }
 
