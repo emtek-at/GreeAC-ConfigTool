@@ -144,7 +144,7 @@ namespace ConfigTool
 
                     break;
                 }
-                catch (Exception e)
+                catch
                 {
                     try
                     {
